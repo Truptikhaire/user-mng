@@ -1,8 +1,4 @@
 $(document).ready(function () {
-    $('#register').on('submit', function(){
-        console.log($('#register').valid());
-
-    })
     $(function () {
         var jqForm = $('#register');
         jqForm.validate({

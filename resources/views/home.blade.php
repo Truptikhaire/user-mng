@@ -16,7 +16,7 @@
 
                     {{-- {{ __('You are logged in!') }} --}}
                     @php
-                        $user = Auth::user();
+                        $user = Auth::user();  //get logged in user details
                     @endphp
                     <div class="row">
                         <div class="col-6">
@@ -46,11 +46,7 @@
                                 }
                             @endphp
                             <strong>Gender:</strong> &nbsp; {{$show}}
-                        </div>
-                        <div class="col-6">
-                            <strong>First Name:</strong> &nbsp; {{$user->first_name}}
-                        </div>
-                        
+                        </div>                        
                     </div>
                 </div>
             </div>

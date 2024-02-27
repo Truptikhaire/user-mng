@@ -67,17 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        try{
-            $mailData = [
-                'title' => 'Mail from User-Mng',
-                'body' => 'This is for testing email using smtp.',
-                'email' => $data['email'],
-                'password' => $data['password'],
-                'url' => url('/register'),
-            ];
-             
-            Mail::to($data['email'])->send(new RegisterMail($mailData));
-    
+        try{   
             $user = User::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -87,16 +77,33 @@ class RegisterController extends Controller
                 'dob' => $data['dob'],
                 'gender' => $data['gender'],
             ]);
+            if($user){ // if user registed successfuly then send email
+                $mailData = [
+                    'title' => 'Mail from User-Mng',
+                    'body' => 'This is for testing email using smtp.',
+                    'email' => $data['email'],
+                    'password' => $data['password'],
+                    'url' => url('/register'),
+                ];
+                 
+                Mail::to($data['email'])->send(new RegisterMail($mailData));
+            }
             return $user;
         }catch(\Exception $e){
+            return redirect('/register');
             \Log::info('Registration error:'. $e);
         }
     }
 
-    // Custom Register form
+    // Override Register form 
     public function showRegistrationForm()
     {
-        $countries = Country::where('country_status', 'Active')->get();
-        return view('auth.register', compact('countries'));
+        try{   
+            $countries = Country::where('country_status', 'Active')->get(); // get countries from db
+            return view('auth.register', compact('countries'));
+        }catch(\Exception $e){
+            \Log::info('Registration error:'. $e);
+            return redirect('/login');
+        }
     }
 }

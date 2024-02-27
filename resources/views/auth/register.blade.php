@@ -127,10 +127,12 @@
             </div>
         </div>
     </div>
+    {{-- to yield script after jquery cdn --}}
     @section('script')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <script src="{{asset('js/custom.js')}}"></script>
+        {{-- Country, State, city dropdown js --}}
+        <script src="{{asset('js/custom.js')}}"></script> 
         <script src="{{asset('js/register.js')}}"></script>
     @endsection
 @endsection
